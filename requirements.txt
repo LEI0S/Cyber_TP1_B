@@ -1,0 +1,4 @@
+fastapi
+uvicorn[standard]
+# pydantic is a dependency of FastAPI, so it's implicitly included.
+# No other specific libraries needed for this basic version.

@@ -33,30 +33,53 @@ def check_password_strength_logic(password: str) -> PasswordStrengthResponse:
 
     # TODO 1: Length check
     # - If length < 8, add "Password should be at least 8 characters long." to suggestions.
-    #   Do not increment score for this basic requirement if not met.
-    # - If length >= 8, increment score by 1.
-    # - If length >= 12, increment score by another 1 (so +2 total for very long passwords).
+    if len(password)<8:#   Do not increment score for this basic requirement if not met.
+    
+        suggestions.append("Password should be at least 8 characters long.")
+    elif len(password)<12:# - If length >= 8, increment score by 1.
+        score +=1
+    else:# - If length >= 12, increment score by another 1 (so +2 total for very long passwords).
+        score +=2    
+    
 
     # TODO 2: Uppercase letter check
     # - Use regex (re.search(r"[A-Z]", password)) to check for uppercase letters.
     # - If present, increment score by 1.
     # - Else, add "Add uppercase letters." to suggestions.
+    if re.search(r"[A-Z]", password):
+        score += 1
+    else:
+        suggestions.append("Add uppercase letters.")
+
 
     # TODO 3: Lowercase letter check
     # - Use regex (re.search(r"[a-z]", password)) to check for lowercase letters.
     # - If present, increment score by 1. (Most passwords will have this, but good to check)
     # - Else, add "Add lowercase letters." to suggestions.
+    if re.search(r"[a-z]", password):
+        score += 1
+    else:
+        suggestions.append("Add lowercase letters.")
+
 
     # TODO 4: Digit check
     # - Use regex (re.search(r"[0-9]", password)) to check for digits.
     # - If present, increment score by 1.
     # - Else, add "Add digits." to suggestions.
+    if re.search(r"[0-9]", password):
+        score += 1
+    else:
+        suggestions.append("Add uppercase letters.")
 
     # TODO 5: Symbol check
     # - Use regex (re.search(r"[!@#$%^&*(),.?\":{}|<>]", password)) to check for symbols.
     #   (Adjust the symbol set as needed)
     # - If present, increment score by 1.
     # - Else, add "Add symbols (e.g., !@#$%)." to suggestions.
+    if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        score += 1
+    else:
+        suggestions.append("Add symbols (e.g., !@#$%).")
 
     # TODO 6: Determine final strength category based on the score.
     # - Ensure score doesn't exceed the max key in strength_levels.

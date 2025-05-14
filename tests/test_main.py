@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from fastapi import status
-from main import app # Assuming main.py is in the parent directory
+from main import app  # Assuming main.py is in the parent directory
 
 client = TestClient(app)
 
@@ -14,52 +14,39 @@ def test_health_check_strength_checker():
 def test_check_password_strength_very_weak_short():
     # Test with a very short password
     password_to_check = "abc"
-    response = client.post("/check_password_strength", json={"password": password_to_check})
+    response = client.post("/check_password_strength",
+                           json={"password": password_to_check})
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-    
-    assert data["password"] == password_to_check # Or masked if you implement that
-    # TODO: Assert that `data["strength"]` is "very_weak" or similar based on your logic.
-    # TODO: Assert that `data["score"]` is low (e.g., 0 or 1).
-    # TODO: Assert that `data["suggestions"]` contains "Password should be at least 8 characters long."
-    # Example:
-    # assert data["strength"] == "very_weak"
-    # assert data["score"] <= 1
-    # assert "Password should be at least 8 characters long." in data["suggestions"]
-    pass # Remove when assertions are added
+
+    assert data["password"] == password_to_check
+    assert data["strength"] in ["weak", "veryweak"]
+    assert data["score"] <= 1
+    assert "Password should be at "
+    "least 8 characters long." in data["suggestions"]
 
 
 def test_check_password_strength_medium_only_lowercase_and_long():
-    password_to_check = "thisisalongpassword" # Long, but only lowercase
-    response = client.post("/check_password_strength", json={"password": password_to_check})
+    password_to_check = "thisisalongpassword"  # Long, but only lowercase
+    response = client.post("/check_password_strength",
+                           json={"password": password_to_check})
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-
-    # TODO: Assert the strength category (e.g., "medium" or "weak" depending on scoring).
-    # TODO: Assert that suggestions include adding uppercase, digits, and symbols.
-    # Example:
-    # assert data["strength"] in ["weak", "medium"] 
-    # assert "Add uppercase letters." in data["suggestions"]
-    # assert "Add digits." in data["suggestions"]
-    # assert "Add symbols (e.g., !@#$%)." in data["suggestions"]
-    pass # Remove when assertions are added
+    assert data["strength"] in ["weak", "medium", "strong"]
+    assert "Add uppercase letters." in data["suggestions"]
+    assert "Add digits." in data["suggestions"]
+    assert "Add symbols (e.g., !@#$%)." in data["suggestions"]
 
 
 def test_check_password_strength_strong_all_criteria():
-    password_to_check = "Str0ngP@sswOrd123!" # Meets all criteria
-    response = client.post("/check_password_strength", json={"password": password_to_check})
+    password_to_check = "Str0ngP@sswOrd123!"  # Meets all criteria
+    response = client.post("/check_password_strength",
+                           json={"password": password_to_check})
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
-
-    # TODO: Assert that `data["strength"]` is "strong" or "very_strong".
-    # TODO: Assert that `data["score"]` is high.
-    # TODO: Assert that `data["suggestions"]`
-    # is empty or contains minimal/no suggestions.
-    # Example:
-    # assert data["strength"] in ["strong", "very_strong"]
-    # assert data["score"] >= 4
-    # assert len(data["suggestions"]) == 0
-    pass  # Remove when assertions are added
+    assert data["strength"] in ["strong", "very_strong"]
+    assert data["score"] >= 4
+    assert len(data["suggestions"]) == 0
 
 
 def test_check_password_strength_missing_payload():

@@ -57,7 +57,7 @@ def check_password_strength_logic(password: str) -> PasswordStrengthResponse:
     if re.search(r"[0-9]", password):
         score += 1
     else:
-        suggestions.append("Add uppercase letters.")
+        suggestions.append("Add digits.")
     if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         score += 1
     else:

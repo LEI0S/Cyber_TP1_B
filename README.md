@@ -1,68 +1,91 @@
-# Password Strength Checker API
+# 🔐 Password Strength Checker API
 
-## Description
+## 📄 Description
 
-(TO BE COMPLETED BY STUDENTS: Briefly describe the project - e.g., an API that analyzes a given password and returns its estimated strength and suggestions for improvement.)
+Une API développée avec **FastAPI** qui évalue la force d’un mot de passe donné. Elle attribue une note et une étiquette descriptive (ex: `weak`, `strong`, etc.) selon plusieurs critères de sécurité. L’API fournit également des **suggestions d’amélioration** pour renforcer les mots de passe jugés faibles.
 
-## Prerequisites
+---
 
-(TO BE COMPLETED BY STUDENTS: List what is needed to run this project locally, e.g., Python 3.8+ and pip.)
+## ✅ Prérequis
 
-## Installation
+Pour exécuter ce projet localement, vous aurez besoin de :
 
-1.  Clone this repository:
+- **Python 3.8+**
+- **pip** (généralement fourni avec Python)
+- **Git** (optionnel, pour cloner le projet)
+
+---
+
+## ⚙️ Installation
+
+1. Clonez ce dépôt :
     ```bash
-    # git clone <repository_url>
-    # cd <repository_name>
+    git clone <repository_url>
+    cd <repository_name>
     ```
-2.  Create and activate a Python virtual environment:
+
+2. Créez et activez un environnement virtuel Python :
     ```bash
     python -m venv venv
-    # On macOS/Linux:
+    # Sur macOS/Linux :
     source venv/bin/activate
-    # On Windows (PowerShell/cmd):
-    # venv\Scripts\activate
+    # Sur Windows :
+    venv\Scripts\activate
     ```
-3.  Install the required dependencies:
+
+3. Installez les dépendances :
     ```bash
     pip install -r requirements.txt
     ```
 
-## Running the Application
+---
 
-To run the FastAPI application locally using Uvicorn:
+## 🚀 Exécution de l'application
+
+Pour lancer l'application localement avec Uvicorn :
+
 ```bash
 uvicorn main:app --reload
-```
-The application will typically be available at http://127.0.0.1:8000. The interactive API documentation (Swagger UI) can be found at http://127.0.0.1:8000/docs.
+Une fois lancée, l'API est accessible à :
 
-## API Endpoints
+http://127.0.0.1:8000
 
-(TO BE COMPLETED BY STUDENTS: Describe each API endpoint, its purpose, request body/path parameters, and an example of the expected JSON response or behavior.)
+Documentation interactive : http://127.0.0.1:8000/docs
 
-* POST /check_password_strength
-  * Description: (Students to describe: e.g., Analyzes the provided password.)
-  * Request Body: {"password": "yourPassword123"}
-  * Example Response (200 OK):
-  ```json
-    {
-        "password": "yourPassword123", 
-        "strength": "medium", 
-        "score": 3,
-        "suggestions": ["Add symbols (e.g., !@#$%)"]
-    }
-  ```
+📡 API Endpoints
+🔸 POST /check_password_strength
+Description :
+Analyse un mot de passe et retourne sa force estimée avec des suggestions d'amélioration.
 
-* GET /health_strength_checker
-  * Description: (Students to describe: Health check for this API.)
-  * Response: {"status_strength_checker": "ok"}
 
-## Project Structure
+Corps de la requête :
 
-(Optional: Students can briefly describe the main files if they wish)
+json
+Copier
+Modifier
+{
+  "password": "yourPassword123"
+}
+Réponse (200 OK) — Exemple :
 
-* main.py: Contains the FastAPI application logic for the password strength checker.
-* requirements.txt: Lists the Python dependencies.
-* tests/: Contains the automated tests.
-* .gitlab-ci.yml: Defines the GitLab CI/CD pipeline.
-* README.md: This file.
+json
+Copier
+Modifier
+{
+  "password": "yourPassword123", 
+  "strength": "verystrong", 
+  "score": 4,
+  "suggestions": ["Add symbols (e.g., !@#$%)"]
+}
+🔹 GET /health_strength_checker
+Description :
+Vérifie que l’API fonctionne correctement.
+
+Réponse (200 OK) :
+
+json
+Copier
+Modifier
+{
+  "status_strength_checker": "ok"
+}
